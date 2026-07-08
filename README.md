@@ -1,2 +1,2 @@
-# --30-Days-of-Code--
+# -30-Days-of-Code-
 Programando con diferentes lenguajes, desde la plataforma HackerRank..
