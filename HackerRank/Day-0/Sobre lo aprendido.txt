@@ -1,0 +1,1 @@
+En estos temas de programación, veremos los diferentes tipos de datos y las sintaxis que manejan los lenguajes. Esto nos ayudará a entender cómo se asemejan entre sí y nos dará la base para adaptarnos fácilmente a cualquier lenguaje.
