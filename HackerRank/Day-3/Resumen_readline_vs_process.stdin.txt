@@ -1,0 +1,23 @@
+Resumen Ejecutivo: readline vs. process.stdin
+El código evalúa exactamente la misma lógica matemática (clasificar números en "Weird" o "Not Weird" según si son pares/impares y su tamaño). Sin embargo, la diferencia radica en cómo capturan la información desde la terminal:
+
+1. Interfaz readline (Diseñado para Humanos)
+Cómo opera: Funciona de forma interactiva y en tiempo real.
+
+Flujo: El usuario escribe un número, presiona Enter, el programa lo procesa inmediatamente, muestra el resultado en pantalla y se cierra de forma automática.
+
+Uso ideal: Pruebas manuales y aplicaciones interactivas en tu computadora.
+
+2. Flujo process.stdin (Diseñado para Automatización)
+Cómo opera: Funciona procesando bloques de datos en masa (Streams).
+
+Flujo: No reacciona al presionar Enter porque se queda esperando a que se introduzcan más líneas de texto. No ejecuta la lógica hasta que recibe una señal explícita de "Fin de Archivo" (EOF), la cual se envía manualmente con Ctrl + Z + Enter (en Windows).
+
+Uso ideal: Plataformas de evaluación automática como HackerRank, que inyectan archivos completos con cientos de datos de prueba a la vez.
+
+3. Solución Técnica: El operador Pipe (|)
+Para evitar que la consola de Windows se congele al probar el código de HackerRank localmente, se utiliza la redirección de flujos en la terminal mediante el comando:
+
+Bash
+echo 3 | node main.js
+Este comando inyecta el número directamente y simula el fin de archivo de forma automática, haciendo que el programa responda y finalice de inmediato sin necesidad de presionar comandos de escape en el teclado.
