@@ -1,0 +1,97 @@
+GUÍA DE EXPLICACIÓN PASO A PASO: ALGORITMO DE LÓGICA CONDICIONAL EN JAVASCRIPT
+
+Este documento está estructurado para servirte como guión técnico y de presentación.
+Divide el código en sus dos fases principales: Entrada de datos y Lógica del negocio.
+
+===============================================================================
+FASE 1: ENTRADA Y PROCESAMIENTO DE DATOS (Líneas 1 a 18)
+===============================================================================
+Esta sección no resuelve el problema matemático, sino que prepara el entorno para
+recibir datos desde la consola de comandos de manera eficiente y asíncrona.
+
+1. 'use strict';
+   - Qué es: Modo estricto de JavaScript.
+   - Utilidad: Fuerza al motor a evaluar el código de manera rigurosa. Evita malas
+     prácticas, como declarar variables globalmente por accidente o usar palabras
+     reservadas. Hace que el código ejecute más rápido y falle antes si hay errores.
+
+2. process.stdin.resume() y process.stdin.setEncoding('utf-8');
+   - Qué es: Configuración del flujo de entrada estándar (Standard Input).
+   - Utilidad: .resume() le dice al proceso que empiece a escuchar activamente lo
+     que se escribe en la consola. .setEncoding('utf-8') asegura que los datos
+     recibidos se interpreten correctamente como texto legible (caracteres UTF-8)
+     y no como datos binarios (buffers).
+
+3. Variables globales de control (inputString y currentLine):
+   - let inputString = ''; // Acumula todo el texto masivo que ingresa a la consola.
+   - let currentLine = 0;   // Funciona como un puntero o índice para saber qué fila
+                             estamos leyendo del array final.
+
+4. Captura por Eventos (process.stdin.on):
+   - Evento 'data': Cada vez que entra un fragmento de texto, se dispara esta función
+     y lo concatena (suma) a inputString.
+   - Evento 'end': Se dispara automáticamente cuando ya no hay más datos por leer.
+     Aquí ocurren dos cosas cruciales:
+     a) inputString.split('\n'): Rompe el gran bloque de texto usando los saltos de
+        línea como separadores, transformándolo en un Array (lista de líneas).
+     b) main(): Invoca a la función principal para comenzar el procesamiento.
+
+5. Función readLine():
+   - Qué hace: Retorna la línea de texto correspondiente al índice 'currentLine' e
+     inmediatamente después incrementa ese contador en 1 (gracias al operador ++).
+     Esto permite que la próxima llamada a readLine() entregue la siguiente línea automáticamente.
+
+
+===============================================================================
+FASE 2: LA FUNCIÓN PRINCIPAL Y LA LÓGICA DE CONTROL (main)
+===============================================================================
+Aquí se procesa el valor y se ejecutan las reglas específicas del problema.
+
+1. Lectura y Conversión:
+   const N = parseInt(readLine().trim(), 10);
+   - .trim(): Elimina cualquier espacio en blanco o salto de línea invisible al inicio o final.
+   - parseInt(..., 10): Convierte esa cadena de texto limpia en un número entero. El '10'
+     indica el sistema numérico decimal (base 10), garantizando que se interprete de forma estándar.
+
+2. Árbol de Decisiones (Estructura If-Else):
+
+   RAMA 1: Condición de Número Impar
+   if (N % 2 !== 0) { console.log("Weird"); }
+   - Operador Módulo (%): Calcula el residuo de dividir N entre 2.
+   - Lógica: Si el residuo es diferente de 0, el número es impar. Cumpliendo con la primera
+     regla del problema, el programa imprime "Weird" (Raro) y finaliza.
+
+   RAMA 2: Condición de Número Par (Bloque else)
+   Si el residuo es 0, entra al bloque else. Dentro de este bloque se evalúan tres sub-rangos:
+
+   - Sub-rango A (De 2 a 5 inclusive):
+     if (N >= 2 && N <= 5) { console.log("Not Weird"); }
+     * Usa el operador lógico AND (&&). Ambas evaluaciones deben ser verdaderas. Si está en este
+       rango, imprime "Not Weird".
+
+   - Sub-rango B (De 6 a 20 inclusive):
+     else if (N >= 6 && N <= 20) { console.log("Weird"); }
+     * Si no cumplió el rango anterior, evalúa si está en este intervalo intermedio. Si es verdadero,
+       imprime "Weird".
+
+   - Sub-rango C (Mayores que 20):
+     else if (N > 20) { console.log("Not Weird"); }
+     * Para números pares estrictamente mayores a 20, imprime "Not Weird".
+
+
+===============================================================================
+💡 PREGUNTAS TRAMPA DE PROFESORES (Y CÓMO RESPONDERLAS)
+===============================================================================
+Pregunta: ¿Por qué no usamos 'let' en vez de 'const' para declarar N?
+Respuesta: "Usamos 'const' porque el valor de N se asigna una sola vez al leer la entrada y
+no vuelve a modificarse durante la ejecución de la función. Es una buena práctica para asegurar
+la inmutabilidad de los datos."
+
+Pregunta: ¿Qué pasa si la entrada es un número decimal?
+Respuesta: "La función 'parseInt' truncará la parte decimal y tomará únicamente la parte entera
+antes de realizar las evaluaciones, garantizando que el operador de módulo funcione sobre enteros."
+
+Pregunta: ¿Cómo funciona el operador ++ en currentLine++ dentro de readLine()?
+Respuesta: "Es un operador de post-incremento. Primero se lee el valor actual de currentLine para
+acceder al elemento del array, y justo después de completar la lectura de la línea, la variable
+incrementa en 1 para apuntar a la siguiente fila."
